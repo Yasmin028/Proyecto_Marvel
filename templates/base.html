@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title if title else "Marvel API" }}</title>
+  <link rel="stylesheet" href="/static/css/bulma.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        <strong>Marvel API</strong>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" href="/peliculas">Películas</a>
+        <a class="navbar-item" href="/personajes">Personajes</a>
+        <a class="navbar-item" href="/directores">Directores</a>
+        <a class="navbar-item" href="/curiosidades">Curiosidades</a>
+        <a class="navbar-item" href="/dashboard">Dashboard</a>
+      </div>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <form action="/buscar" method="get">
+            <div class="field has-addons">
+              <div class="control">
+                <input class="input" type="text" name="q" placeholder="Buscar...">
+              </div>
+              <div class="control">
+                <button class="button is-info">Buscar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido dinámico -->
+  <section class="section">
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+  </section>
+</body>
+</html>

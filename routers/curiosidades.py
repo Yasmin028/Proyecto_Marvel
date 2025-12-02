@@ -1,0 +1,57 @@
+from fastapi import APIRouter, Depends, HTTPException
+from sqlmodel import Session, select
+from db import get_session
+from models.models import Curiosidad
+from models.schemas import CuriosidadCreate
+
+router = APIRouter()
+SessionDep = Depends(get_session)
+
+@router.get("/", tags=["Curiosidades"])
+def obtener_curiosidades(activos: bool = True, session: Session = SessionDep):
+    statement = select(Curiosidad).where(Curiosidad.estado == activos)
+    return session.exec(statement).all()
+
+@router.post("/", tags=["Curiosidades"])
+def crear_curiosidad(curiosidad: Curiosidad, session: Session = SessionDep):
+    session.add(curiosidad)
+    session.commit()
+    session.refresh(curiosidad)
+    return curiosidad
+
+@router.put("/{pelicula_id}", tags=["Curiosidades"])
+def actualizar_curiosidad(pelicula_id: int, curiosidad: Curiosidad, session: Session = SessionDep):
+    db_curiosidad = session.get(Curiosidad, pelicula_id)
+    if not db_curiosidad:
+        raise HTTPException(status_code=404, detail="Curiosidad no encontrada")
+    for key, value in curiosidad.dict(exclude_unset=True).items():
+        setattr(db_curiosidad, key, value)
+    session.add(db_curiosidad)
+    session.commit()
+    session.refresh(db_curiosidad)
+    return db_curiosidad
+
+@router.delete("/{pelicula_id}", tags=["Curiosidades"])
+def eliminar_curiosidad(pelicula_id: int, session: Session = SessionDep):
+    db_curiosidad = session.get(Curiosidad, pelicula_id)
+    if not db_curiosidad:
+        raise HTTPException(status_code=404, detail="Curiosidad no encontrada")
+    db_curiosidad.estado = False
+    session.add(db_curiosidad)
+    session.commit()
+    return {"mensaje": "Curiosidad eliminada (soft delete)"}
+
+@router.post("/restaurar/{pelicula_id}", tags=["Curiosidades"])
+def restaurar_curiosidad(pelicula_id: int, session: Session = SessionDep):
+    db_curiosidad = session.get(Curiosidad, pelicula_id)
+    if not db_curiosidad:
+        raise HTTPException(status_code=404, detail="Curiosidad no encontrada")
+    db_curiosidad.estado = True
+    session.add(db_curiosidad)
+    session.commit()
+    return {"mensaje": "Curiosidad restaurada"}
+
+@router.get("/historico", tags=["Curiosidades"])
+def curiosidades_eliminadas(session: Session = SessionDep):
+    statement = select(Curiosidad).where(Curiosidad.estado == False)
+    return session.exec(statement).all()

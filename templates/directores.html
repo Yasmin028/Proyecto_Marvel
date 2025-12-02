@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="title">Directores</h2>
+
+<form action="/directores" method="post" class="box">
+  <div class="field">
+    <label class="label">Nombre</label>
+    <input class="input" type="text" name="nombre" required>
+  </div>
+  <button class="button is-info">Registrar Director</button>
+</form>
+
+<hr>
+
+<h3 class="subtitle">Listado de Directores</h3>
+<table class="table is-striped is-fullwidth">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for director in directores %}
+    <tr>
+      <td>{{ director.nombre }}</td>
+      <td>{{ "Activo" if director.estado else "Eliminado" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

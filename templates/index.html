@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content has-text-centered">
+  <h1 class="title">Bienvenido a la API de Marvel</h1>
+  <p class="subtitle">Gestiona películas, personajes, directores y curiosidades del universo Marvel.</p>
+
+  <div class="buttons is-centered">
+    <a href="/peliculas" class="button is-primary">Películas</a>
+    <a href="/personajes" class="button is-link">Personajes</a>
+    <a href="/directores" class="button is-info">Directores</a>
+    <a href="/curiosidades" class="button is-warning">Curiosidades</a>
+    <a href="/dashboard" class="button is-success">Dashboard</a>
+  </div>
+</div>
+{% endblock %}

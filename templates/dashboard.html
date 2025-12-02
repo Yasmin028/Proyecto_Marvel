@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="title">Dashboard</h2>
+<p class="subtitle">Estadísticas del universo Marvel</p>
+
+<div class="columns">
+  <div class="column">
+    <canvas id="peliculasChart"></canvas>
+  </div>
+  <div class="column">
+    <canvas id="personajesChart"></canvas>
+  </div>
+</div>
+
+<script>
+const peliculasCtx = document.getElementById('peliculasChart');
+new Chart(peliculasCtx, {
+  type: 'bar',
+  data: {
+    labels: ['Activas', 'Eliminadas'],
+    datasets: [{
+      label: 'Películas',
+      data: [10, 2], // valores mock
+      backgroundColor: ['#48c774', '#f14668']
+    }]
+  }
+});
+
+const personajesCtx = document.getElementById('personajesChart');
+new Chart(personajesCtx, {
+  type: 'pie',
+  data: {
+    labels: ['Activos', 'Eliminados'],
+    datasets: [{
+      label: 'Personajes',
+      data: [20, 5], // valores mock
+      backgroundColor: ['#3273dc', '#ffdd57']
+    }]
+  }
+});
+</script>
+{% endblock %}

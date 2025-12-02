@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="title">Personajes</h2>
+
+<!-- Formulario para registrar personaje con imagen -->
+<form action="/personajes" method="post" enctype="multipart/form-data" class="box">
+  <div class="field">
+    <label class="label">Nombre</label>
+    <input class="input" type="text" name="nombre" required>
+  </div>
+  <div class="field">
+    <label class="label">Poder</label>
+    <input class="input" type="text" name="poder" required>
+  </div>
+  <div class="field">
+    <label class="label">Imagen</label>
+    <input class="file-input" type="file" name="imagen" accept="image/*">
+  </div>
+  <button class="button is-link">Registrar Personaje</button>
+</form>
+
+<hr>
+
+<h3 class="subtitle">Listado de Personajes</h3>
+<table class="table is-striped is-fullwidth">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Poder</th>
+      <th>Imagen</th>
+      <th>Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for personaje in personajes %}
+    <tr>
+      <td>{{ personaje.nombre }}</td>
+      <td>{{ personaje.poder }}</td>
+      <td>
+        {% if personaje.imagen_url %}
+          <img src="{{ personaje.imagen_url }}" alt="Foto" style="width:80px;height:80px;object-fit:cover;">
+        {% else %}
+          <span class="tag is-light">Sin imagen</span>
+        {% endif %}
+      </td>
+      <td>{{ "Activo" if personaje.estado else "Eliminado" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

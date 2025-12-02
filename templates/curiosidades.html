@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="title">Curiosidades</h2>
+
+<form action="/curiosidades" method="post" class="box">
+  <div class="field">
+    <label class="label">Película ID</label>
+    <input class="input" type="number" name="pelicula_id" required>
+  </div>
+  <div class="field">
+    <label class="label">Contenido</label>
+    <textarea class="textarea" name="contenido" required></textarea>
+  </div>
+  <button class="button is-warning">Registrar Curiosidad</button>
+</form>
+
+<hr>
+
+<h3 class="subtitle">Listado de Curiosidades</h3>
+<table class="table is-striped is-fullwidth">
+  <thead>
+    <tr>
+      <th>Película ID</th>
+      <th>Contenido</th>
+      <th>Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for curiosidad in curiosidades %}
+    <tr>
+      <td>{{ curiosidad.pelicula_id }}</td>
+      <td>{{ curiosidad.contenido }}</td>
+      <td>{{ "Activa" if curiosidad.estado else "Eliminada" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
