@@ -1,16 +1,28 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-<div class="content has-text-centered">
-  <h1 class="title">Bienvenido a la API de Marvel</h1>
-  <p class="subtitle">Gestiona películas, personajes, directores y curiosidades del universo Marvel.</p>
+<!-- Hero con carrusel pantalla completa -->
+<section class="marvel-hero">
+  <div class="carousel-container fullscreen">
+    <div class="carousel-slide active">
+      <img src="/static/img/Marvel_carrusel.jpeg" alt="Películas Marvel">
+      <h2 class="title is-2">PELÍCULAS MARVEL</h2>
+      <p class="subtitle is-4">Un viaje cinematográfico que conecta todo el MCU.</p>
+    </div>
+    <div class="carousel-slide">
+      <img src="/static/img/Personajes_carrusel.jpeg" alt="Personajes Marvel">
+      <h2 class="title is-2">PERSONAJES MARVEL</h2>
+      <p class="subtitle is-4">Los héroes y villanos que marcan generaciones.</p>
+    </div>
+    <div class="carousel-slide">
+      <img src="/static/img/Villanos_carrusel.jpg" alt="Curiosidades Marvel">
+      <h2 class="title is-2">CURIOSIDADES MARVEL</h2>
+      <p class="subtitle is-4">Secretos y detalles detrás de este universo.</p>
+    </div>
 
-  <div class="buttons is-centered">
-    <a href="/peliculas" class="button is-primary">Películas</a>
-    <a href="/personajes" class="button is-link">Personajes</a>
-    <a href="/directores" class="button is-info">Directores</a>
-    <a href="/curiosidades" class="button is-warning">Curiosidades</a>
-    <a href="/dashboard" class="button is-success">Dashboard</a>
+    <!-- Botones de navegación -->
+    <button class="carousel-btn prev">⟨</button>
+    <button class="carousel-btn next">⟩</button>
   </div>
-</div>
+</section>
 {% endblock %}

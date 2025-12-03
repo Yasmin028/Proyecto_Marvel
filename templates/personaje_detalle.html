@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section" style="
+  background: url('/static/img/stars-bg.jpg') center center / cover no-repeat;
+  min-height: 100vh;
+  padding: 3rem;
+">
+  <div class="columns is-centered">
+    <div class="column is-half">
+      <div class="personaje-card">
+        <div class="personaje-card-image">
+          {% if personaje.imagen_url %}
+            <img src="{{ personaje.imagen_url }}" alt="{{ personaje.nombre }}">
+          {% else %}
+            <div class="placeholder"><span class="placeholder-text">SIN IMAGEN</span></div>
+          {% endif %}
+          <div class="personaje-overlay">
+            <h2 class="personaje-nombre">{{ personaje.nombre }}</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="box has-text-centered" style="margin-top:1.5rem; background:rgba(0,0,0,0.7); border:3px solid #e62429;">
+        <p class="is-size-3 has-text-warning">Poder</p>
+        <p class="is-size-4 has-text-white">{{ personaje.poder or "No especificado" }}</p>
+        <p class="is-size-3 has-text-warning" style="margin-top:1rem;">Estado</p>
+        <p class="is-size-4 has-text-white">{{ "Activo" if personaje.estado else "Inactivo" }}</p>
+      </div>
+
+      <div class="has-text-centered" style="margin-top:1rem;">
+        <a class="button is-danger is-medium" href="/personajes">Volver a personajes</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

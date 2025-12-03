@@ -2,35 +2,52 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>{{ title if title else "Marvel API" }}</title>
-  <link rel="stylesheet" href="/static/css/bulma.min.css">
+  <title>{{ title if title else "Marvel" }}</title>
+
+  <!-- Tipografía personalizada -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <!-- Bulma y Chart.js -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Tus estilos personalizados -->
+  <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
+
   <!-- Navbar -->
-  <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+  <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="/">
-        <strong>Marvel API</strong>
+      <a class="navbar-item" href="/" style="align-items: center;">
+        <img src="/static/img/Logo.png" alt="Marvel Logo">
+        <span class="ml-3 marvel-text">MARVEL</span>
+      </a>
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
       </a>
     </div>
-    <div class="navbar-menu">
+
+    <div id="navbarMenu" class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item" href="/peliculas">Películas</a>
-        <a class="navbar-item" href="/personajes">Personajes</a>
-        <a class="navbar-item" href="/directores">Directores</a>
-        <a class="navbar-item" href="/curiosidades">Curiosidades</a>
-        <a class="navbar-item" href="/dashboard">Dashboard</a>
+        <a class="navbar-item" href="/peliculas/page">Películas</a>
+        <a class="navbar-item" href="/personajes/page">Personajes</a>
+        <a class="navbar-item" href="/directores/page">Directores</a>
+        <a class="navbar-item" href="/curiosidades/page">Curiosidades</a>
+        <a class="navbar-item" href="/dashboard/page">Dashboard</a>
       </div>
       <div class="navbar-end">
         <div class="navbar-item">
+          <!-- 🔎 Buscador clásico -->
           <form action="/buscar" method="get">
             <div class="field has-addons">
-              <div class="control">
-                <input class="input" type="text" name="q" placeholder="Buscar...">
+              <div class="control is-expanded">
+                <input class="input is-large" type="text" name="q" placeholder="Buscar..." required>
               </div>
               <div class="control">
-                <button class="button is-info">Buscar</button>
+                <button class="button is-info is-large" type="submit">🔍 Buscar</button>
               </div>
             </div>
           </form>
@@ -40,10 +57,83 @@
   </nav>
 
   <!-- Contenido dinámico -->
-  <section class="section">
-    <div class="container">
-      {% block content %}{% endblock %}
+  {% block content %}{% endblock %}
+
+  <!-- Footer -->
+  <footer class="footer marvel-footer">
+    <div class="columns is-vcentered is-variable is-8">
+      <div class="column is-one-third has-text-centered">
+        <p class="footer-subtitle"><strong>Contacto</strong></p>
+        <div class="columns is-mobile is-multiline is-centered footer-contact-grid">
+          <div class="column is-half"><a href="mailto:yassvel11@gmail.com" class="footer-link" target="_blank">Correo</a></div>
+          <div class="column is-half"><a href="https://facebook.com/Yasmin.Velasco.0211" class="footer-link" target="_blank">Facebook</a></div>
+          <div class="column is-half"><a href="https://instagram.com/whxs_yass/" class="footer-link" target="_blank">Instagram</a></div>
+          <div class="column is-half"><a href="https://x.com/yvelasco02" class="footer-link" target="_blank">X</a></div>
+        </div>
+      </div>
+      <div class="column is-one-third has-text-centered">
+        <p class="footer-title">Universo <span class="marvel-text">MARVEL</span></p>
+        <p class="footer-signature">Proyecto hecho por Yasmin</p>
+      </div>
+      <div class="column is-one-third has-text-centered intro-footer">
+        <h2 class="footer-subtitle">Explora el Universo Marvel</h2>
+        <p>
+          Este proyecto reúne películas, personajes y curiosidades del MCU en un solo lugar.<br>
+          Aquí aprenderás cómo se conectan las historias, descubrirás datos curiosos de cada película<br>
+          y explorarás la evolución de los héroes y villanos de este gran universo.
+        </p>
+      </div>
     </div>
-  </section>
+  </footer>
+
+  <!-- Script hamburguesa -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const burgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+      burgers.forEach(el => {
+        el.addEventListener('click', () => {
+          const target = el.dataset.target;
+          const menu = document.getElementById(target);
+          el.classList.toggle('is-active');
+          menu.classList.toggle('is-active');
+        });
+      });
+    });
+  </script>
+
+  <!-- Script carrusel -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('.carousel-slide');
+      const prevBtn = document.querySelector('.carousel-btn.prev');
+      const nextBtn = document.querySelector('.carousel-btn.next');
+      let current = 0;
+
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === index);
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          current = (current + 1) % slides.length;
+          showSlide(current);
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          current = (current - 1 + slides.length) % slides.length;
+          showSlide(current);
+        });
+      }
+
+      setInterval(() => {
+        current = (current + 1) % slides.length;
+        showSlide(current);
+      }, 5000);
+    });
+  </script>
 </body>
 </html>

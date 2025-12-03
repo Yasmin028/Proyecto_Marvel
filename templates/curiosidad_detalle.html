@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section" style="
+  background: url('/static/img/stars-bg.jpg') center center / cover no-repeat;
+  min-height: 100vh;
+  padding: 3rem;
+">
+  <h1 class="title has-text-warning has-text-centered" style="font-size: 5rem;">
+    ✨ Curiosidad de {{ curiosidad.pelicula.titulo if curiosidad.pelicula else "Película desconocida" }}
+  </h1>
+
+  <div class="columns is-centered" style="margin-top: 2rem;">
+    <div class="column is-half">
+      <div class="curiosidad-card">
+        <div class="curiosidad-card-image">
+          {% if curiosidad.pelicula and curiosidad.pelicula.imagen_url %}
+            <img src="{{ curiosidad.pelicula.imagen_url }}" alt="{{ curiosidad.pelicula.titulo }}">
+          {% else %}
+            <div class="placeholder"><span class="placeholder-text">SIN IMAGEN</span></div>
+          {% endif %}
+          <div class="curiosidad-overlay">
+            <h2 class="curiosidad-titulo">{{ curiosidad.pelicula.titulo if curiosidad.pelicula else "Sin título" }}</h2>
+          </div>
+        </div>
+        <div class="box has-text-centered" style="margin-top:1rem; background:rgba(0,0,0,0.7); border:3px solid #e62429;">
+          <p class="is-size-4 has-text-white">{{ curiosidad.contenido }}</p>
+          <p class="is-size-6 has-text-warning">{{ "Activa" if curiosidad.estado else "Eliminada" }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="has-text-centered" style="margin-top:2rem;">
+    <a href="/curiosidades/page" class="button is-warning is-large">⬅️ Volver al listado</a>
+  </div>
+</section>
+{% endblock %}

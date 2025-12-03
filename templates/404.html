@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section" style="
+  background: url('/static/img/stars-bg.jpg') center center / cover no-repeat;
+  min-height: 100vh;
+  padding: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+">
+  <div class="has-text-centered">
+    <h1 class="title has-text-warning" style="font-size: 8rem;">⚠️ 404</h1>
+    <p class="subtitle is-3 has-text-white">Página no encontrada</p>
+
+    {% if mensaje %}
+      <p class="has-text-grey is-size-4">{{ mensaje }}</p>
+    {% else %}
+      <p class="has-text-grey is-size-4">Lo sentimos, la página que buscas no existe.</p>
+    {% endif %}
+
+    <div style="margin-top:2rem;">
+      <a class="button is-danger is-large" href="/">Volver al inicio</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

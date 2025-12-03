@@ -1,33 +1,45 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 {% block content %}
-<h2 class="title">Directores</h2>
-
-<form action="/directores" method="post" class="box">
-  <div class="field">
-    <label class="label">Nombre</label>
-    <input class="input" type="text" name="nombre" required>
+<section class="section" style="
+  background: url('/static/img/stars-bg.jpg') center center / cover no-repeat;
+  min-height: 100vh;
+  padding: 3rem;
+">
+  <div class="has-text-centered mb-6">
+    <h1 class="title has-text-warning" style="font-size: 8rem;">🎬 DIRECTORES</h1>
+    <p class="subtitle is-3 has-text-white">Los visionarios detrás del universo Marvel</p>
   </div>
-  <button class="button is-info">Registrar Director</button>
-</form>
 
-<hr>
-
-<h3 class="subtitle">Listado de Directores</h3>
-<table class="table is-striped is-fullwidth">
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Estado</th>
-    </tr>
-  </thead>
-  <tbody>
+  <div class="columns is-multiline">
     {% for director in directores %}
-    <tr>
-      <td>{{ director.nombre }}</td>
-      <td>{{ "Activo" if director.estado else "Eliminado" }}</td>
-    </tr>
+      <div class="column is-one-sixth">
+        <a href="/directores/{{ director.nombre }}">
+          <div class="director-card">
+            <div class="director-card-image">
+              {% if director.imagen_url %}
+                <img src="{{ director.imagen_url }}" alt="{{ director.nombre }}">
+              {% else %}
+                <div class="placeholder">
+                  <span class="placeholder-text">SIN IMAGEN</span>
+                </div>
+              {% endif %}
+            </div>
+            <div class="director-overlay">
+              <h2 class="director-nombre">{{ director.nombre }}</h2>
+              <p class="has-text-white is-size-6">
+                {{ "Activo" if director.estado else "Inactivo" }}
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
     {% endfor %}
-  </tbody>
-</table>
+  </div>
+
+  {% if directores|length == 0 %}
+    <div class="has-text-centered">
+      <p class="has-text-grey is-size-4">No hay directores registrados aún.</p>
+    </div>
+  {% endif %}
+</section>
 {% endblock %}

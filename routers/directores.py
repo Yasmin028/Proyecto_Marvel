@@ -13,11 +13,12 @@ def obtener_directores(activos: bool = True, session: Session = SessionDep):
     return session.exec(statement).all()
 
 @router.post("/", tags=["Directores"])
-def crear_director(director: Director, session: Session = SessionDep):
-    session.add(director)
+def crear_director(director: DirectorCreate, session: Session = SessionDep):
+    nuevo = Director(**director.dict())
+    session.add(nuevo)
     session.commit()
-    session.refresh(director)
-    return director
+    session.refresh(nuevo)
+    return nuevo
 
 @router.put("/{nombre}", tags=["Directores"])
 def actualizar_director(nombre: str, director: Director, session: Session = SessionDep):

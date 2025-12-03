@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section" style="
+  background: url('/static/img/stars-bg.jpg') center center / cover no-repeat;
+  min-height: 100vh;
+  padding: 3rem;
+">
+  <div class="columns is-centered">
+    <div class="column is-half">
+      <div class="director-card">
+        <div class="director-card-image">
+          {% if director.imagen_url %}
+            <img src="{{ director.imagen_url }}" alt="{{ director.nombre }}">
+          {% else %}
+            <div class="placeholder"><span class="placeholder-text">SIN IMAGEN</span></div>
+          {% endif %}
+          <div class="director-overlay">
+            <h2 class="director-nombre">{{ director.nombre }}</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="box has-text-centered" style="margin-top:1.5rem; background:rgba(0,0,0,0.7); border:3px solid #e62429;">
+        <p class="is-size-3 has-text-warning">Biografía</p>
+        <p class="is-size-4 has-text-white">{{ director.biografia or "No disponible" }}</p>
+        <p class="is-size-3 has-text-warning" style="margin-top:1rem;">Estado</p>
+        <p class="is-size-4 has-text-white">{{ "Activo" if director.estado else "Inactivo" }}</p>
+      </div>
+
+      <div class="has-text-centered" style="margin-top:1rem;">
+        <a class="button is-danger is-medium" href="/directores">Volver a directores</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,563 @@
+/* Tipografía global */
+body {
+  font-family: 'Bebas Neue', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  padding-top: 12rem; /* ajusta según la altura real de tu navbar */
+}
+
+/* =========================
+   NAVBAR ESTILO MARVEL
+   ========================= */
+.navbar {
+  position: fixed;
+  background-color: rgba(230, 36, 41, 0.95);
+  font-size: 5rem;
+  padding: 2rem 3rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  z-index: 1000;
+  height: 12rem;
+}
+
+.navbar-brand .navbar-item img {
+  max-height: 13rem;
+}
+
+.marvel-text {
+  background-color: #fff;
+  color: #e62429;
+  padding: 0.3rem 1rem;
+  border: 3px solid #e62429;
+  border-radius: 5px;
+  font-size: 8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.marvel-text:hover {
+  transform: scale(1.1);
+  color: #ffd700;
+}
+
+.navbar-item {
+  font-size: 5rem;
+  font-weight: bold;
+  color: #fff !important;
+  padding: 0.3rem 4rem;
+}
+.navbar-item:hover {
+  transform: scale(1.1);
+  color: #ffd700 !important;
+  background-color: #b71c1c;
+}
+
+.navbar .input.is-large {
+  font-size: 4rem !important;
+  width: 100% !important;
+  height: 5rem !important;
+}
+
+.navbar .button.is-info.is-large {
+  font-size: 3.5rem !important;
+  padding: 1rem 2rem !important;
+  height: 5rem !important;
+}
+
+.field.has-addons .control:last-child {
+  flex: 0 0 auto;
+}
+
+/* =========================
+   HERO CON FONDO ESTELAR
+   ========================= */
+.marvel-hero {
+  background: url("/static/img/Fondo_estelar.png") no-repeat center center;
+  background-size: cover;
+  min-height: 87.14vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 6rem;
+}
+
+/* =========================
+   CARRUSEL PANTALLA COMPLETA
+   ========================= */
+.carousel-container.fullscreen {
+  width: 700%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-slide {
+  display: none;
+  animation: fadeIn 1s ease-in-out;
+}
+.carousel-slide.active {
+  display: block;
+}
+
+/* IMÁGENES GRANDES Y CENTRADAS */
+.carousel-slide img {
+  width: 46vw;
+  height: 46vh;
+  object-fit: cover;
+  margin-bottom: 4rem;
+  border-radius: 0;
+}
+
+/* TÍTULOS Y SUBTÍTULOS GRANDES */
+.carousel-slide h2.title.is-2 {
+  font-size: 5rem !important;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.carousel-slide p.subtitle.is-4 {
+  font-size: 4rem !important;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(230, 36, 41, 0.8);
+  color: #fff;
+  border: none;
+  font-size: 10rem;
+  padding: 0.5rem 2rem;
+  cursor: pointer;
+  z-index: 100;
+  transition: background-color 0.3s ease;
+}
+.carousel-btn:hover { background-color: #b71c1c; }
+.carousel-btn.prev { left: 10rem; }
+.carousel-btn.next { right: 10rem; }
+
+/* =========================
+   BUSQUEDA / MODAL
+   ========================= */
+.animated-modal {
+  animation: zoomIn 1s ease forwards;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-card {
+  max-width: 95vw;
+  max-height: 90vh;
+  padding: 3rem;
+  background-color: rgba(0, 0, 0, 0.95);
+  border: 4px solid #e62429;
+  border-radius: 12px;
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+}
+
+.modal-background {
+  background: url("/static/img/Fondo_estelar.png") center center / cover no-repeat;
+  opacity: 0.9;
+}
+
+.search-group {
+  margin-bottom: 4rem;
+}
+
+.search-group h2 {
+  font-size: 4rem;
+  color: #ffd700;
+  margin-bottom: 2rem;
+  border-bottom: 3px solid #e62429;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.search-card {
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  border: 3px solid #e62429;
+  border-radius: 16px;
+  padding: 4rem 5rem;
+  margin: 2rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+}
+.search-card:hover { transform: scale(1.06); }
+
+.search-card h3 {
+  font-size: 6rem;
+  color: #ffd700;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.search-card p {
+  font-size: 3.5rem;
+  margin-bottom: 2rem;
+  color: #fff;
+}
+
+.search-card .button {
+  font-size: 3rem;
+  padding: 1.2rem 2.5rem;
+  background-color: #e62429;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+.search-card .button:hover {
+  background-color: #b71c1c;
+}
+
+/* Tarjeta horizontal de búsqueda */
+.search-card-horizontal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.85);
+  border: 3px solid #e62429;
+  border-radius: 16px;
+  padding: 3rem;
+  margin: 2rem auto;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+  width: 100%;
+  max-width: 600px;
+  height: 600px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+.search-card-horizontal:hover { transform: scale(1.05); }
+
+.search-card-text { flex: 1; text-align: left; }
+
+.search-card-text h3 {
+  font-size: 5rem;
+  color: #ffd700;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.search-card-text p {
+  font-size: 3rem;
+  color: #fff;
+  margin-bottom: 2rem;
+}
+
+.search-card-text .button {
+  font-size: 2.5rem;
+  padding: 1rem 2rem;
+  background-color: #e62429;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+.search-card-text .button:hover { background-color: #b71c1c; }
+
+/* =========================
+   TARJETAS PELÍCULAS
+   ========================= */
+.pelicula-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+.pelicula-card:hover { transform: scale(1.03); }
+
+.pelicula-card-image {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+}
+.pelicula-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.pelicula-card:hover img { transform: scale(1.05); }
+
+.pelicula-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(230, 36, 41, 0.85);
+  padding: 1rem;
+  text-align: center;
+}
+.pelicula-titulo {
+  font-size: 2.6rem;
+  color: #ffd700;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* =========================
+   TARJETAS PERSONAJES
+   ========================= */
+.personaje-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+.personaje-card:hover { transform: scale(1.03); }
+
+.personaje-card-image {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+}
+.personaje-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.personaje-card:hover img { transform: scale(1.05); }
+
+.personaje-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(230, 36, 41, 0.85);
+  padding: 1rem;
+  text-align: center;
+}
+.personaje-nombre {
+  font-size: 2.6rem;
+  color: #ffd700;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* =========================
+   TARJETAS DIRECTORES
+   ========================= */
+.director-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+.director-card:hover { transform: scale(1.03); }
+
+.director-card-image {
+  position: relative;
+  height: 250px; /* puedes cambiar a aspect-ratio: 2/3 para uniformidad */
+  overflow: hidden;
+}
+.director-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.director-card:hover img { transform: scale(1.05); }
+
+.director-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(230, 36, 41, 0.85);
+  padding: 0.5rem;
+  text-align: center;
+}
+.director-nombre {
+  font-size: 2rem;
+  color: #ffd700;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* =========================
+   TARJETAS CURIOSIDADES
+   ========================= */
+.curiosidad-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+.curiosidad-card:hover { transform: scale(1.03); }
+
+.curiosidad-card-image {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+.curiosidad-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.curiosidad-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(230, 36, 41, 0.85);
+  padding: 0.5rem;
+  text-align: center;
+}
+.curiosidad-titulo {
+  font-size: 2rem;
+  color: #ffd700;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* =========================
+   PLACEHOLDER
+   ========================= */
+.placeholder {
+  width: 100%;
+  height: 200px;
+  background: repeating-linear-gradient(
+    45deg,
+    #1c1c1c,
+    #1c1c1c 10px,
+    #2e2e2e 10px,
+    #2e2e2e 20px
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #e62429;
+  border-radius: 12px;
+}
+.placeholder-text {
+  font-size: 2rem;
+  color: #ffd700;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* =========================
+   FOOTER ESTILO MARVEL
+   ========================= */
+.marvel-footer {
+  background-color: #e62429;
+  color: #fff;
+  padding: 4rem 2rem;
+}
+
+.marvel-footer .columns {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.footer-title {
+  font-size: 6rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.footer-signature {
+  font-size: 3rem;
+  font-style: italic;
+  color: #ffd700;
+}
+
+.footer-subtitle {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.footer-link {
+  color: #ffd700;
+  font-weight: bold;
+  font-size: 2.5rem;
+  display: block;
+  margin: 0.5rem 0;
+}
+.footer-link:hover { color: #fff; letter-spacing: 2px; }
+
+.intro-footer h2 {
+  font-size: 3rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+.intro-footer p {
+  font-size: 2.2rem;
+  color: #fff;
+  line-height: 1.5;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media screen and (max-width: 768px) {
+  .modal-card { padding: 2rem; }
+
+  .search-group h2 { font-size: 3rem; }
+
+  .search-card {
+    background: linear-gradient(145deg, #1c1c1c, #2e2e2e);
+    color: #ffd700;
+    border: 3px solid #e62429;
+  }
+  .search-card h3 { font-size: 4rem; }
+  .search-card p { font-size: 2.5rem; }
+  .search-card .button { font-size: 2.2rem; padding: 1rem 2rem; }
+
+  .search-card-horizontal {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+  }
+  .search-card-text h3 { font-size: 3.5rem; }
+  .search-card-text p { font-size: 2.2rem; }
+  .search-card-text .button { font-size: 2rem; }
+
+  /* Ajustes generales de tarjetas en móvil */
+  .pelicula-titulo,
+  .personaje-nombre,
+  .director-nombre,
+  .curiosidad-titulo { font-size: 2rem; }
+
+  .carousel-slide img {
+    width: 80vw;
+    height: 40vh;
+  }
+}

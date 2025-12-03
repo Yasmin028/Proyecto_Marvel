@@ -11,7 +11,6 @@ SessionDep = Depends(get_session)
 # Carpeta donde se guardan las imágenes
 UPLOAD_DIR = "static/img/uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
-
 # ------------------- CRUD Películas -------------------
 
 @router.get("/", tags=["Peliculas"])
@@ -24,9 +23,18 @@ async def crear_pelicula(
     titulo: str = Form(...),
     año: int = Form(...),
     director_nombre: str = Form(...),
-    imagen: UploadFile = File(None),
+    imagen: UploadFile = Form(...),
     session: Session = SessionDep
 ):
+    # 🔹 Validación de duplicados
+    existe = session.exec(
+        select(Pelicula).where(
+            (Pelicula.titulo == titulo) & (Pelicula.director_nombre == director_nombre)
+        )
+    ).first()
+    if existe:
+        raise HTTPException(status_code=400, detail="La película ya existe con ese título y director")
+
     imagen_url = None
     if imagen and imagen.filename:
         # Validar tipo de archivo
