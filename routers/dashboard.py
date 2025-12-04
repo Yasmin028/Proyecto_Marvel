@@ -8,7 +8,7 @@ from models.models import Pelicula, Personaje, Director
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
-@router.get("/page", response_class=HTMLResponse)
+@router.get("/page", response_class=HTMLResponse, tags=["Dashboard"])
 def dashboard_page(request: Request, session: Session = Depends(get_session)):
 
     peliculas = session.exec(select(Pelicula)).all()
@@ -20,9 +20,7 @@ def dashboard_page(request: Request, session: Session = Depends(get_session)):
     total_personajes = len(personajes)
     total_directores = len(directores)
 
-
     # Películas por año
-    peliculas = session.exec(select(Pelicula)).all()
     conteo_anio = {}
     for p in peliculas:
         if p.año:
@@ -39,7 +37,6 @@ def dashboard_page(request: Request, session: Session = Depends(get_session)):
     estado_personajes = [activos, eliminados]
 
     # Películas por director
-    directores = session.exec(select(Director)).all()
     labels = []
     data = []
     for d in directores:
@@ -55,5 +52,8 @@ def dashboard_page(request: Request, session: Session = Depends(get_session)):
         "request": request,
         "peliculas_por_anio": peliculas_por_anio,
         "estado_personajes": estado_personajes,
-        "peliculas_por_director": peliculas_por_director
+        "peliculas_por_director": peliculas_por_director,
+        "total_peliculas": total_peliculas,
+        "total_personajes": total_personajes,
+        "total_directores": total_directores
     })

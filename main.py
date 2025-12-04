@@ -3,10 +3,10 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
-from sqlmodel import select
+from sqlmodel import create_engine, select
 import base64
 
-from db import create_all_tables
+from db import DATABASE_URL, create_all_tables
 from routers import peliculas, personajes, directores, curiosidades, buscar, dashboard
 
 # Configurar templates y estáticos
@@ -18,9 +18,13 @@ def b64encode(data: bytes) -> str:
 
 templates.env.filters["b64encode"] = b64encode
 
+# ✅ Crear engine aquí
+engine = create_engine(DATABASE_URL, echo=False)
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    create_all_tables()
+    # ✅ Pasar el engine a la función
+    create_all_tables(engine)
     yield
 
 app = FastAPI(title="Marvel API", version="2.0", lifespan=lifespan)
@@ -37,7 +41,6 @@ app.include_router(dashboard.router, prefix="/dashboard", tags=["Dashboard"])
 app.include_router(buscar.router)
 
 # ------------------- Ruta Home -------------------
-
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})

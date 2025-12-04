@@ -19,8 +19,8 @@ def b64encode(data: bytes) -> str:
 templates.env.filters["b64encode"] = b64encode
 
 @router.get("/buscar", tags=["Busqueda"], response_class=HTMLResponse)
-def buscar(request: Request, q: str = Query("", min_length=1), session: Session = SessionDep):
-    term = q.strip()
+def buscar(request: Request, q: str = Query(None), session: Session = SessionDep):
+    term = (q or "").strip()
 
     peliculas = session.exec(
         select(Pelicula).where(Pelicula.titulo.ilike(f"%{term}%"))

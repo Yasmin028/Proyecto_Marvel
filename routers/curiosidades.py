@@ -88,7 +88,7 @@ def vista_curiosidades(request: Request, session: Session = SessionDep):
         "request": request,
         "curiosidades": curiosidades
     })
-    
+
 @router.get("/{id}/page", response_class=HTMLResponse, tags=["Curiosidades"])
 def detalle_curiosidad_html(id: int, request: Request, session: Session = SessionDep):
     curiosidad = session.get(Curiosidad, id)
