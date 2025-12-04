@@ -128,10 +128,10 @@
 - `POST /personajes/restaurar/{nombre}`
 
 ### Directores
-- CRUD completo + restauración.
+- CRUD Agregar y eliminar.
 
 ### Curiosidades
-- CRUD completo + restauración.
+- CRUD Agregar y eliminar.
 
 ### Buscador
 - `GET /buscar?q=texto`.
@@ -139,9 +139,9 @@
 ---
 
 ## 📌 **11. Funcionalidades Principales**
-- CRUD completo para todas las entidades.
+- CRUD para todas las entidades.
 - Subida de imágenes con validación.
-- Soft delete y restauración.
+- Soft delete.
 - Relaciones Películas ↔ Personajes.
 - Dashboard con estadísticas.
 - Buscador global.
