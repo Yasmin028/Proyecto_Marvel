@@ -1,43 +1,125 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2 class="title">Dashboard</h2>
-<p class="subtitle">Estadísticas del universo Marvel</p>
+<section class="section bg-estelar">
+  <div class="container">
+  <h1 class="title has-text-warning has-text-centered" style="font-size: 8rem;">
+      📊 DASHBOARD MARVEL
+    </h1>
 
-<div class="columns">
-  <div class="column">
-    <canvas id="peliculasChart"></canvas>
-  </div>
-  <div class="column">
-    <canvas id="personajesChart"></canvas>
-  </div>
-</div>
+    <!-- ✅ KPIs horizontales -->
+    <div class="columns is-centered mt-5">
 
+      <div class="column is-one-quarter">
+        <div class="dashboard-card">
+          <p class="kpi-number">{{ total_peliculas }}</p>
+          <p class="kpi-label">Películas Registradas</p>
+        </div>
+      </div>
+
+      <div class="column is-one-quarter">
+        <div class="dashboard-card">
+          <p class="kpi-number">{{ total_personajes }}</p>
+          <p class="kpi-label">Personajes Registrados</p>
+        </div>
+      </div>
+
+      <div class="column is-one-quarter">
+        <div class="dashboard-card">
+          <p class="kpi-number">{{ total_directores }}</p>
+          <p class="kpi-label">Directores Registrados</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ✅ Gráficas en dos columnas -->
+    <div class="columns mt-6">
+
+      <div class="column is-half">
+        <div class="dashboard-box">
+          <h2 class="dashboard-title has-text-danger">🎬 Películas por Año</h2>
+          <canvas id="peliculasPorAnio"></canvas>
+        </div>
+      </div>
+
+      <div class="column is-half">
+        <div class="dashboard-box">
+          <h2 class="dashboard-title has-text-warning">🦸 Estado de Personajes</h2>
+          <canvas id="estadoPersonajes"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ✅ Gráfica completa abajo -->
+    <div class="dashboard-box mt-5">
+      <h2 class="dashboard-title has-text-info">🎥 Películas por Director</h2>
+      <canvas id="peliculasPorDirector"></canvas>
+    </div>
+
+  </div>
+</section>
+
+<!-- ✅ Scripts -->
 <script>
-const peliculasCtx = document.getElementById('peliculasChart');
-new Chart(peliculasCtx, {
-  type: 'bar',
-  data: {
-    labels: ['Activas', 'Eliminadas'],
-    datasets: [{
-      label: 'Películas',
-      data: [10, 2], // valores mock
-      backgroundColor: ['#48c774', '#f14668']
-    }]
-  }
-});
+  const peliculasPorAnio = {{ peliculas_por_anio | safe }};
+  const estadoPersonajes = {{ estado_personajes | safe }};
+  const peliculasPorDirector = {{ peliculas_por_director | safe }};
 
-const personajesCtx = document.getElementById('personajesChart');
-new Chart(personajesCtx, {
-  type: 'pie',
-  data: {
-    labels: ['Activos', 'Eliminados'],
-    datasets: [{
-      label: 'Personajes',
-      data: [20, 5], // valores mock
-      backgroundColor: ['#3273dc', '#ffdd57']
-    }]
-  }
-});
+  const marvelRed = "#ED1D24";
+  const marvelBlue = "#0A7BFF";
+  const marvelGold = "#F2C300";
+  const marvelWhite = "#FFFFFF";
+
+  new Chart(document.getElementById("peliculasPorAnio"), {
+    type: "bar",
+    data: {
+      labels: peliculasPorAnio.labels,
+      datasets: [{
+        label: "Películas",
+        data: peliculasPorAnio.data,
+        backgroundColor: marvelRed
+      }]
+    },
+    options: {
+      plugins: { legend: { labels: { color: marvelWhite } } },
+      scales: {
+        x: { ticks: { color: marvelWhite } },
+        y: { ticks: { color: marvelWhite } }
+      }
+    }
+  });
+
+  new Chart(document.getElementById("estadoPersonajes"), {
+    type: "pie",
+    data: {
+      labels: ["Activos", "Eliminados"],
+      datasets: [{
+        data: estadoPersonajes,
+        backgroundColor: [marvelBlue, marvelRed]
+      }]
+    }
+  });
+
+  new Chart(document.getElementById("peliculasPorDirector"), {
+    type: "bar",
+    data: {
+      labels: peliculasPorDirector.labels,
+      datasets: [{
+        label: "Películas",
+        data: peliculasPorDirector.data,
+        backgroundColor: marvelGold
+      }]
+    },
+    options: {
+      plugins: { legend: { labels: { color: marvelWhite } } },
+      scales: {
+        x: { ticks: { color: marvelWhite } },
+        y: { ticks: { color: marvelWhite } }
+      }
+    }
+  });
 </script>
+
 {% endblock %}

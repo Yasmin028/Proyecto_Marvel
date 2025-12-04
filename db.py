@@ -1,7 +1,7 @@
 from sqlmodel import SQLModel, create_engine, Session
 
 # 🔹 Conexión directa a Clever Cloud PostgreSQL
-DATABASE_URL = "postgresql://ujog1zhqq66a2owfkdrx:D6iMD2PVrNczXercD8MmCceoz9rAuK@bkc3nx8y391ucsddnqam-postgresql.services.clever-cloud.com:50013/bkc3nx8y391ucsddnqam"
+DATABASE_URL = "postgresql://uey3jcxwelplh9gijfwb:53z3WjVAfYrajauStXZnw26jLM7QWC@bof3lxgufoam6xb5qdsc-postgresql.services.clever-cloud.com:50013/bof3lxgufoam6xb5qdsc"
 
 # 🔹 Crear el engine con PostgreSQL
 engine = create_engine(DATABASE_URL, echo=True)

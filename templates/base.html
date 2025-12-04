@@ -40,7 +40,6 @@
       </div>
       <div class="navbar-end">
         <div class="navbar-item">
-          <!-- 🔎 Buscador clásico -->
           <form action="/buscar" method="get">
             <div class="field has-addons">
               <div class="control is-expanded">
@@ -56,8 +55,10 @@
     </div>
   </nav>
 
-  <!-- Contenido dinámico -->
-  {% block content %}{% endblock %}
+  <!-- ✅ Contenido dinámico envuelto en MAIN -->
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
 
   <!-- Footer -->
   <footer class="footer marvel-footer">
@@ -71,10 +72,12 @@
           <div class="column is-half"><a href="https://x.com/yvelasco02" class="footer-link" target="_blank">X</a></div>
         </div>
       </div>
+
       <div class="column is-one-third has-text-centered">
         <p class="footer-title">Universo <span class="marvel-text">MARVEL</span></p>
-        <p class="footer-signature">Proyecto hecho por Yasmin</p>
+        <p class="footer-signature">Proyecto hecho por Yasmin Velasco</p>
       </div>
+
       <div class="column is-one-third has-text-centered intro-footer">
         <h2 class="footer-subtitle">Explora el Universo Marvel</h2>
         <p>
@@ -135,5 +138,6 @@
       }, 5000);
     });
   </script>
+
 </body>
 </html>

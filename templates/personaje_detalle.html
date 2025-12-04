@@ -9,7 +9,9 @@
     <div class="column is-half">
       <div class="personaje-card">
         <div class="personaje-card-image">
-          {% if personaje.imagen_url %}
+          {% if personaje.imagen_data %}
+            <img src="data:image/png;base64,{{ personaje.imagen_data | b64encode }}" alt="{{ personaje.nombre }}">
+          {% elif personaje.imagen_url %}
             <img src="{{ personaje.imagen_url }}" alt="{{ personaje.nombre }}">
           {% else %}
             <div class="placeholder"><span class="placeholder-text">SIN IMAGEN</span></div>

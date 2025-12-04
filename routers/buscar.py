@@ -1,3 +1,4 @@
+import base64
 from fastapi import APIRouter, Depends, Query, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -10,6 +11,12 @@ SessionDep = Depends(get_session)
 
 # 👇 instancia de templates (necesaria aquí)
 templates = Jinja2Templates(directory="templates")
+
+# 👇 Filtro Jinja para convertir binario a base64
+def b64encode(data: bytes) -> str:
+    return base64.b64encode(data).decode("utf-8")
+
+templates.env.filters["b64encode"] = b64encode
 
 @router.get("/buscar", tags=["Busqueda"], response_class=HTMLResponse)
 def buscar(request: Request, q: str = Query("", min_length=1), session: Session = SessionDep):

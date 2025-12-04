@@ -283,26 +283,43 @@ body {
    TARJETAS PELÍCULAS
    ========================= */
 .pelicula-card {
-  position: relative;
+  width: 100%;
+  max-width: 380px;
+  margin: auto;
+  border: 3px solid #e62429;
+  background: rgba(0, 0, 0, 0.85);
+  box-shadow: 0 0 20px #e62429;
   border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  padding: 1rem;
   transition: transform 0.3s ease;
 }
-.pelicula-card:hover { transform: scale(1.03); }
+
+.pelicula-card:hover {
+  transform: scale(1.05);
+}
+
+.pelicula-card-image img {
+  width: 100%;
+  max-height: 350px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.columns .column {
+  margin-bottom: 2rem;
+}
 
 .pelicula-card-image {
   position: relative;
   aspect-ratio: 2 / 3;
   overflow: hidden;
 }
-.pelicula-card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.3s ease;
+
+/* ✅ Espaciado entre columnas */
+.columns .column {
+  margin-bottom: 2rem;
 }
+
 .pelicula-card:hover img { transform: scale(1.05); }
 
 .pelicula-overlay {
@@ -325,12 +342,14 @@ body {
    TARJETAS PERSONAJES
    ========================= */
 .personaje-card {
-  position: relative;
+  padding: 1.5rem;
+  border: 3px solid #e62429;
   border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  background: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 20px #e62429;
   transition: transform 0.3s ease;
 }
+
 .personaje-card:hover { transform: scale(1.03); }
 
 .personaje-card-image {
@@ -409,24 +428,29 @@ body {
    TARJETAS CURIOSIDADES
    ========================= */
 .curiosidad-card {
-  position: relative;
+  max-width: 300px;
+  margin: auto;
+  transform: scale(1.1);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
   transition: transform 0.3s ease;
 }
-.curiosidad-card:hover { transform: scale(1.03); }
+.curiosidad-card:hover {
+  transform: scale(1.50); }
 
 .curiosidad-card-image {
   width: 100%;
   height: 250px;
+  border-radius: 8px;
   overflow: hidden;
   margin-bottom: 0;
 }
 .curiosidad-card-image img {
   width: 100%;
-  height: 100%;
+  height: 230%;
   object-fit: cover;
+  border-radius: 8px;
 }
 .curiosidad-overlay {
   position: absolute;
@@ -560,4 +584,101 @@ body {
     width: 80vw;
     height: 40vh;
   }
+
+}
+.bg-estelar {
+  background: url('/static/img/Fondo_estelar.png') center center / cover no-repeat;
+  min-height: 100vh;
+  padding: 3rem;
+}
+
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1; /* ocupa todo el espacio disponible */
+}
+
+.footer {
+  margin-top: auto; /* empuja el footer al fondo */
+}
+
+/* Animación al aparecer la tarjeta */
+.card.fade-in {
+  animation: fadeIn 0.8s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Hover en títulos de curiosidades */
+.curiosidad-card .has-text-warning:hover {
+  text-shadow: 0 0 10px #f2c300;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+.card {
+  width: 100%;
+  max-width: 650px;
+  border: 3px solid #e62429;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.85);
+  box-shadow: 0 0 40px #e62429;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card-image img {
+  border-radius: 8px;
+  height: 250px;
+  object-fit: cover;
+}
+
+.dashboard-card {
+  background: rgba(0, 0, 0, 0.85);
+  border: 3px solid #e62429;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 15px #e62429;
+  transition: transform 0.3s ease;
+}
+
+.dashboard-card:hover {
+  transform: scale(1.05);
+}
+
+.kpi-number {
+  font-size: 4rem;
+  color: #F2C300;
+  font-weight: bold;
+}
+
+.kpi-label {
+  font-size: 1.5rem;
+  color: white;
+}
+
+.dashboard-box {
+  background: rgba(0, 0, 0, 0.75);
+  border: 3px solid #e62429;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 15px #e62429;
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
 }

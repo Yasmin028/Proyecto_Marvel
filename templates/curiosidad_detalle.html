@@ -5,33 +5,40 @@
   min-height: 100vh;
   padding: 3rem;
 ">
-  <h1 class="title has-text-warning has-text-centered" style="font-size: 5rem;">
-    ✨ Curiosidad de {{ curiosidad.pelicula.titulo if curiosidad.pelicula else "Película desconocida" }}
-  </h1>
-
-  <div class="columns is-centered" style="margin-top: 2rem;">
+  <div class="columns is-centered">
     <div class="column is-half">
-      <div class="curiosidad-card">
-        <div class="curiosidad-card-image">
+
+      <div class="card fade-in" style="background: transparent; border: 3px solid #e62429;">
+        <div class="card-image has-text-centered p-4">
           {% if curiosidad.pelicula and curiosidad.pelicula.imagen_url %}
-            <img src="{{ curiosidad.pelicula.imagen_url }}" alt="{{ curiosidad.pelicula.titulo }}">
+          <figure class="image" style="max-width: 100%; margin: auto;">
+            <img src="{{ curiosidad.pelicula.imagen_url }}" alt="{{ curiosidad.pelicula.titulo }}" style="width: 100%; max-height: 350px; object-fit: contain; border-radius: 8px;">
+          </figure>
           {% else %}
             <div class="placeholder"><span class="placeholder-text">SIN IMAGEN</span></div>
           {% endif %}
-          <div class="curiosidad-overlay">
-            <h2 class="curiosidad-titulo">{{ curiosidad.pelicula.titulo if curiosidad.pelicula else "Sin título" }}</h2>
-          </div>
         </div>
-        <div class="box has-text-centered" style="margin-top:1rem; background:rgba(0,0,0,0.7); border:3px solid #e62429;">
-          <p class="is-size-4 has-text-white">{{ curiosidad.contenido }}</p>
-          <p class="is-size-6 has-text-warning">{{ "Activa" if curiosidad.estado else "Eliminada" }}</p>
+
+        <div class="card-content has-text-centered">
+          <h1 class="title has-text-warning" style="font-size: 3rem;">
+            {{ curiosidad.pelicula.titulo if curiosidad.pelicula else "Película desconocida" }}
+          </h1>
+
+          <p class="is-size-4 has-text-black mt-4">
+            {{ curiosidad.contenido }}
+          </p>
+
+          <p class="is-size-6 has-text-warning mt-2">
+            {{ "Activa" if curiosidad.estado else "Eliminada" }}
+          </p>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div class="has-text-centered" style="margin-top:2rem;">
-    <a href="/curiosidades/page" class="button is-warning is-large">⬅️ Volver al listado</a>
+      <div class="has-text-centered mt-5">
+        <a href="/curiosidades/page" class="button is-warning is-medium">⬅️ Volver al listado</a>
+      </div>
+
+    </div>
   </div>
 </section>
 {% endblock %}

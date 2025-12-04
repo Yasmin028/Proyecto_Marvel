@@ -5,17 +5,37 @@
 <section class="marvel-hero">
   <div class="carousel-container fullscreen">
     <div class="carousel-slide active">
-      <img src="/static/img/Marvel_carrusel.jpeg" alt="Películas Marvel">
+      {% if carrusel_peliculas and carrusel_peliculas.imagen_data %}
+        <img src="data:image/png;base64,{{ carrusel_peliculas.imagen_data | b64encode }}" alt="Películas Marvel">
+      {% elif carrusel_peliculas and carrusel_peliculas.imagen_url %}
+        <img src="{{ carrusel_peliculas.imagen_url }}" alt="Películas Marvel">
+      {% else %}
+        <img src="/static/img/Marvel_carrusel.jpeg" alt="Películas Marvel">
+      {% endif %}
       <h2 class="title is-2">PELÍCULAS MARVEL</h2>
       <p class="subtitle is-4">Un viaje cinematográfico que conecta todo el MCU.</p>
     </div>
+
     <div class="carousel-slide">
-      <img src="/static/img/Personajes_carrusel.jpeg" alt="Personajes Marvel">
+      {% if carrusel_personajes and carrusel_personajes.imagen_data %}
+        <img src="data:image/png;base64,{{ carrusel_personajes.imagen_data | b64encode }}" alt="Personajes Marvel">
+      {% elif carrusel_personajes and carrusel_personajes.imagen_url %}
+        <img src="{{ carrusel_personajes.imagen_url }}" alt="Personajes Marvel">
+      {% else %}
+        <img src="/static/img/Personajes_carrusel.jpeg" alt="Personajes Marvel">
+      {% endif %}
       <h2 class="title is-2">PERSONAJES MARVEL</h2>
       <p class="subtitle is-4">Los héroes y villanos que marcan generaciones.</p>
     </div>
+
     <div class="carousel-slide">
-      <img src="/static/img/Villanos_carrusel.jpg" alt="Curiosidades Marvel">
+      {% if carrusel_curiosidades and carrusel_curiosidades.imagen_data %}
+        <img src="data:image/png;base64,{{ carrusel_curiosidades.imagen_data | b64encode }}" alt="Curiosidades Marvel">
+      {% elif carrusel_curiosidades and carrusel_curiosidades.imagen_url %}
+        <img src="{{ carrusel_curiosidades.imagen_url }}" alt="Curiosidades Marvel">
+      {% else %}
+        <img src="/static/img/Villanos_carrusel.jpg" alt="Curiosidades Marvel">
+      {% endif %}
       <h2 class="title is-2">CURIOSIDADES MARVEL</h2>
       <p class="subtitle is-4">Secretos y detalles detrás de este universo.</p>
     </div>

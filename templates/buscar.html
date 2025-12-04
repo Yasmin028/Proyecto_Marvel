@@ -21,7 +21,9 @@
           <a href="/peliculas/{{ pelicula.id }}">
             <div class="pelicula-card">
               <div class="pelicula-card-image">
-                {% if pelicula.imagen_url %}
+                {% if pelicula.imagen_data %}
+                  <img src="data:image/png;base64,{{ pelicula.imagen_data | b64encode }}" alt="{{ pelicula.titulo }}">
+                {% elif pelicula.imagen_url %}
                   <img src="{{ pelicula.imagen_url }}" alt="{{ pelicula.titulo }}">
                 {% else %}
                   <div class="placeholder"><span class="placeholder-text">SIN IMAGEN</span></div>
@@ -46,7 +48,9 @@
           <a href="/personajes/{{ personaje.nombre }}">
             <div class="personaje-card">
               <div class="personaje-card-image">
-                {% if personaje.imagen_url %}
+                {% if personaje.imagen_data %}
+                  <img src="data:image/png;base64,{{ personaje.imagen_data | b64encode }}" alt="{{ personaje.nombre }}">
+                {% elif personaje.imagen_url %}
                   <img src="{{ personaje.imagen_url }}" alt="{{ personaje.nombre }}">
                 {% else %}
                   <div class="placeholder"><span class="placeholder-text">SIN IMAGEN</span></div>
@@ -71,7 +75,9 @@
           <a href="/directores/{{ director.nombre }}">
             <div class="director-card">
               <div class="director-card-image">
-                {% if director.imagen_url %}
+                {% if director.imagen_data %}
+                  <img src="data:image/png;base64,{{ director.imagen_data | b64encode }}" alt="{{ director.nombre }}">
+                {% elif director.imagen_url %}
                   <img src="{{ director.imagen_url }}" alt="{{ director.nombre }}">
                 {% else %}
                   <div class="placeholder"><span class="placeholder-text">SIN IMAGEN</span></div>
@@ -96,7 +102,9 @@
           <a href="/curiosidades/{{ curiosidad.pelicula_id }}">
             <div class="curiosidad-card">
               <div class="curiosidad-card-image">
-                {% if curiosidad.pelicula and curiosidad.pelicula.imagen_url %}
+                {% if curiosidad.pelicula and curiosidad.pelicula.imagen_data %}
+                  <img src="data:image/png;base64,{{ curiosidad.pelicula.imagen_data | b64encode }}" alt="Curiosidad">
+                {% elif curiosidad.pelicula and curiosidad.pelicula.imagen_url %}
                   <img src="{{ curiosidad.pelicula.imagen_url }}" alt="Curiosidad">
                 {% else %}
                   <div class="placeholder"><span class="placeholder-text">SIN IMAGEN</span></div>

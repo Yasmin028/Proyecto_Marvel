@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <section class="section" style="
-  background: url('/static/img/stars-bg.jpg') center center / cover no-repeat;
+  background: url('/static/img/Logo_estelar.png') center center / cover no-repeat;
   min-height: 100vh;
   padding: 3rem;
 ">
@@ -9,11 +9,13 @@
     <div class="column is-half">
       <div class="pelicula-card">
         <div class="pelicula-card-image">
+
           {% if pelicula.imagen_url %}
             <img src="{{ pelicula.imagen_url }}" alt="{{ pelicula.titulo }}">
           {% else %}
             <div class="placeholder"><span class="placeholder-text">SIN IMAGEN</span></div>
           {% endif %}
+
           <div class="pelicula-overlay">
             <h2 class="pelicula-titulo">{{ pelicula.titulo }}</h2>
           </div>

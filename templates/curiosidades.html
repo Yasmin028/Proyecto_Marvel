@@ -1,62 +1,61 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
 {% block content %}
-<section class="section" style="
-  background: url('/static/img/stars-bg.jpg') center center / cover no-repeat;
-  min-height: 100vh;
-  padding: 3rem;
-">
-  <h1 class="title has-text-warning has-text-centered" style="font-size: 8rem;">✨ Curiosidades</h1>
+<section class="section bg-estelar">
+  <div class="container">
+    <h1 class="title has-text-warning has-text-centered" style="font-size: 8rem;">✨ Curiosidades</h1>
 
-  {# 🔹 Formulario solo visible en /docs #}
-  {% if request.url.path == "/docs" %}
-    <form method="post" action="/curiosidades">
-      <div class="field">
-        <label class="label">TEXTO DE LA CURIOSIDAD</label>
-        <div class="control">
-          <input class="input" type="text" name="contenido" required>
+    {# 🔹 Formulario solo visible en /docs #}
+    {% if request.url.path == "/docs" %}
+      <form method="post" action="/curiosidades">
+        <div class="field">
+          <label class="label">TEXTO DE LA CURIOSIDAD</label>
+          <div class="control">
+            <input class="input" type="text" name="contenido" required>
+          </div>
         </div>
-      </div>
-      <div class="field">
-        <label class="label">NOMBRE DE LA PELÍCULA</label>
-        <div class="control">
-          <input class="input" type="text" name="pelicula_id" required>
+        <div class="field">
+          <label class="label">NOMBRE DE LA PELÍCULA</label>
+          <div class="control">
+            <input class="input" type="text" name="pelicula_id" required>
+          </div>
         </div>
-      </div>
-      <div class="control">
-        <button class="button is-warning">Agregar Curiosidad</button>
-      </div>
-    </form>
-  {% endif %}
+        <div class="control">
+          <button class="button is-warning">Agregar Curiosidad</button>
+        </div>
+      </form>
+    {% endif %}
 
-  {# 🔹 Listado de curiosidades como tarjetas #}
-  {% if curiosidades %}
-    <h2 class="title has-text-warning">Listado de Curiosidades</h2>
-    <div class="columns is-multiline">
-      {% for curiosidad in curiosidades %}
-        <div class="column is-one-sixth">
-          <a href="/curiosidades/{{ curiosidad.pelicula_id }}">
-            <div class="curiosidad-card">
-              <div class="curiosidad-card-image">
-                {% if curiosidad.pelicula and curiosidad.pelicula.imagen_url %}
-                  <img src="{{ curiosidad.pelicula.imagen_url }}" alt="Curiosidad">
-                {% else %}
-                  <div class="placeholder"><span class="placeholder-text">SIN IMAGEN</span></div>
-                {% endif %}
-                <div class="curiosidad-overlay">
-                  <h2 class="curiosidad-titulo">{{ curiosidad.pelicula.titulo }}</h2>
-                </div>
-              </div>
-              <div class="box has-text-centered" style="margin-top:1rem; background:rgba(0,0,0,0.7); border:3px solid #e62429;">
-                <p class="is-size-4 has-text-white">{{ curiosidad.contenido }}</p>
-                <p class="is-size-6 has-text-warning">{{ "Activa" if curiosidad.estado else "Eliminada" }}</p>
-              </div>
-            </div>
-          </a>
-        </div>
-      {% endfor %}
+    {# 🔹 Listado de curiosidades como tarjetas #}
+    {% if curiosidades %}
+      <h2 class="title has-text-warning">Listado de Curiosidades</h2>
+      <div class="columns is-multiline">
+
+        {% for curiosidad in curiosidades %}
+  <div class="column is-one-third">
+    <div class="curiosidad-card">
+      <div class="curiosidad-card-image">
+        {% if curiosidad.pelicula and curiosidad.pelicula.imagen_url %}
+          <img src="{{ curiosidad.pelicula.imagen_url }}" alt="{{ curiosidad.pelicula.titulo }}">
+        {% else %}
+          <div class="placeholder"><span class="placeholder-text">SIN IMAGEN</span></div>
+        {% endif %}
+      </div>
+      <div class="has-text-centered mt-2">
+        <a href="/curiosidades/{{ curiosidad.id }}/page">
+          {{ curiosidad.pelicula.titulo if curiosidad.pelicula else "Sin título" }}
+        </a>
+      </div>
     </div>
-  {% else %}
-    <p class="has-text-centered has-text-grey is-size-4">No hay curiosidades registradas aún.</p>
-  {% endif %}
+  </div>
+{% endfor %}
+
+      </div>
+
+    {% else %}
+      <p class="has-text-centered has-text-grey is-size-4">No hay curiosidades registradas aún.</p>
+    {% endif %}
+
+  </div>
 </section>
 {% endblock %}
