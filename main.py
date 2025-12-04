@@ -2,8 +2,10 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
+from fastapi.exceptions import RequestValidationError
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from contextlib import asynccontextmanager
-from sqlmodel import create_engine, select
+from sqlmodel import create_engine
 import base64
 
 from db import DATABASE_URL, create_all_tables
@@ -23,7 +25,6 @@ engine = create_engine(DATABASE_URL, echo=False)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # ✅ Pasar el engine a la función
     create_all_tables(engine)
     yield
 
@@ -44,3 +45,55 @@ app.include_router(buscar.router)
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
+
+
+# ============================================================
+# ✅ ✅ ✅ MANEJO DE ERRORES EN UNA SOLA PLANTILLA
+# ============================================================
+
+# ✅ Handler para errores HTTP (404, 403, 401, etc.)
+@app.exception_handler(StarletteHTTPException)
+async def http_error_handler(request: Request, exc: StarletteHTTPException):
+    return templates.TemplateResponse(
+        "error.html",
+        {
+            "request": request,
+            "codigo": exc.status_code,
+            "titulo": f"Error {exc.status_code}",
+            "mensaje": exc.detail,
+            "volver_url": request.headers.get("referer", "/")
+        },
+        status_code=exc.status_code
+    )
+
+# ✅ Handler para errores de validación (formularios, tipos incorrectos)
+@app.exception_handler(RequestValidationError)
+async def validation_error_handler(request: Request, exc: RequestValidationError):
+    return templates.TemplateResponse(
+        "error.html",
+        {
+            "request": request,
+            "codigo": 422,
+            "titulo": "Datos inválidos",
+            "mensaje": "Los datos enviados no son válidos.",
+            "detalle": str(exc),
+            "volver_url": request.headers.get("referer", "/")
+        },
+        status_code=422
+    )
+
+# ✅ Handler para errores inesperados (500)
+@app.exception_handler(Exception)
+async def general_error_handler(request: Request, exc: Exception):
+    return templates.TemplateResponse(
+        "error.html",
+        {
+            "request": request,
+            "codigo": 500,
+            "titulo": "Error interno",
+            "mensaje": "Algo salió mal en el servidor.",
+            "detalle": str(exc),
+            "volver_url": request.headers.get("referer", "/")
+        },
+        status_code=500
+    )

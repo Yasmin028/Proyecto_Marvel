@@ -10,7 +10,7 @@
           {% set imagen_url = director.imagen_url %}
 
           {% if imagen_url is none %}
-            {% for pelicula in director.peliculas %}
+            {% for pelicula in peliculas %}
               {% if pelicula.imagen_url and imagen_url is none %}
                 {% set imagen_url = pelicula.imagen_url %}
               {% endif %}
@@ -36,9 +36,9 @@
 
         <p class="is-size-3 has-text-warning" style="margin-top:1rem;">Películas dirigidas</p>
 
-        {% if director.peliculas %}
+        {% if peliculas %}
           <div class="tags are-large is-justify-content-center">
-            {% for pelicula in director.peliculas %}
+            {% for pelicula in peliculas %}
               <span class="tag is-info">{{ pelicula.titulo }}</span>
             {% endfor %}
           </div>

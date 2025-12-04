@@ -5,13 +5,86 @@
   <div class="container">
     <h1 class="title has-text-warning has-text-centered" style="font-size: 8rem;">🎬 PELÍCULAS</h1>
     <p class="subtitle is-3 has-text-white has-text-centered">Explora las películas del universo Marvel</p>
+
+    <!-- ✅ MENSAJE DE CONFIRMACIÓN -->
+    {% if mensaje %}
+      <div class="notification is-success is-light has-text-centered">
+        {{ mensaje }}
+      </div>
+    {% endif %}
+
+    <!-- ✅ MENSAJE DE ERROR -->
+    {% if mensaje_error %}
+      <div class="notification is-danger is-light has-text-centered">
+        {{ mensaje_error }}
+      </div>
+    {% endif %}
+
+    {# ✅ FORMULARIO PARA CREAR PELÍCULA #}
+    <div class="box" style="margin-top: 2rem; background: rgba(0,0,0,0.8); border: 3px solid #e62429;">
+      <h2 class="title is-3 has-text-warning has-text-centered">Agregar nueva película</h2>
+
+      <form action="/peliculas" method="post" enctype="multipart/form-data">
+        <div class="columns">
+          <div class="column is-half">
+
+            <div class="field">
+              <label class="label has-text-white">Título</label>
+              <div class="control">
+                <input class="input" type="text" name="titulo" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label has-text-white">Año</label>
+              <div class="control">
+                <input class="input" type="number" name="año" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label has-text-white">Director</label>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select name="director_id" required>
+                    {% for director in directores %}
+                      <option value="{{ director.id }}">{{ director.nombre }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="column is-half">
+            <div class="field">
+              <label class="label has-text-white">Imagen</label>
+              <div class="control">
+                <input class="input" type="file" name="imagen" accept="image/png,image/jpeg,image/webp">
+              </div>
+            </div>
+
+            <div class="field has-text-centered" style="margin-top: 2rem;">
+              <button class="button is-danger is-medium">
+                Guardar película
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    {# ✅ FIN FORMULARIO #}
+
   </div>
 
   <div class="columns is-multiline is-centered">
   {% for pelicula in peliculas %}
     <div class="column is-one-third">
-      <a href="/peliculas/{{ pelicula.id }}/page">
-        <div class="pelicula-card">
+
+      <div class="pelicula-card">
+
+        <a href="/peliculas/{{ pelicula.id }}/page">
           <div class="pelicula-card-image">
 
             {% if pelicula.imagen_url %}
@@ -23,11 +96,22 @@
             {% endif %}
 
           </div>
+
           <div class="pelicula-overlay">
             <h2 class="title is-3 has-text-warning pelicula-titulo">{{ pelicula.titulo }}</h2>
           </div>
-        </div>
-      </a>
+        </a>
+
+        <!-- ✅ BOTÓN DE ELIMINAR -->
+        <form action="/peliculas/{{ pelicula.id }}" method="post" style="margin-top: 1rem;" onsubmit="return confirm('¿Eliminar esta película?');">
+          <input type="hidden" name="_method" value="delete">
+          <div class="has-text-centered">
+            <button class="button is-small is-danger">Eliminar</button>
+          </div>
+        </form>
+
+      </div>
+
     </div>
   {% endfor %}
 </div>

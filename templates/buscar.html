@@ -5,7 +5,7 @@
   min-height: 100vh;
   padding: 3rem;
 ">
-  <h1 class="title has-text-warning has-text-centered" style="font-size: 6rem;">🔎 Resultados para “{{ q }}”</h1>
+  <h1 class="title has-text-warning has-text-centered" style="font-size: 6rem;"> Resultados para “{{ q }}”</h1>
 
   {% if mensaje %}
     <div class="notification is-warning has-text-centered is-size-4" style="margin-top: 2rem;">
@@ -13,14 +13,17 @@
     </div>
   {% endif %}
 
+  {# ============================
+     ✅ PELÍCULAS
+     ============================ #}
   {% if peliculas %}
     <h2 class="title has-text-warning">Películas</h2>
     <div class="columns is-multiline">
       {% for pelicula in peliculas %}
-        <div class="column is-one-sixth">
-          <a href="/peliculas/{{ pelicula.id }}">
-            <div class="pelicula-card">
-              <div class="pelicula-card-image">
+        <div class="column is-one-quarter">
+          <a href="/peliculas/page#card-{{ pelicula.id }}">
+            <div class="card has-background-black" style="border:2px solid #e62429;">
+              <div class="card-image">
                 {% if pelicula.imagen_data %}
                   <img src="data:image/png;base64,{{ pelicula.imagen_data | b64encode }}" alt="{{ pelicula.titulo }}">
                 {% elif pelicula.imagen_url %}
@@ -28,10 +31,10 @@
                 {% else %}
                   <div class="placeholder"><span class="placeholder-text">SIN IMAGEN</span></div>
                 {% endif %}
-                <div class="pelicula-overlay">
-                  <h2 class="pelicula-titulo">{{ pelicula.titulo }}</h2>
-                  <p class="has-text-white is-size-6">{{ pelicula.año or "No especificado" }}</p>
-                </div>
+              </div>
+              <div class="card-content has-text-centered">
+                <p class="title is-4 has-text-warning">{{ pelicula.titulo }}</p>
+                <p class="subtitle is-6 has-text-grey-light">{{ pelicula.año or "No especificado" }}</p>
               </div>
             </div>
           </a>
@@ -40,14 +43,17 @@
     </div>
   {% endif %}
 
+  {# ============================
+     ✅ PERSONAJES
+     ============================ #}
   {% if personajes %}
     <h2 class="title has-text-warning">Personajes</h2>
     <div class="columns is-multiline">
       {% for personaje in personajes %}
-        <div class="column is-one-sixth">
-          <a href="/personajes/{{ personaje.nombre }}">
-            <div class="personaje-card">
-              <div class="personaje-card-image">
+        <div class="column is-one-quarter">
+          <a href="/personajes/page#card-{{ personaje.id }}">
+            <div class="card has-background-black" style="border:2px solid #e62429;">
+              <div class="card-image">
                 {% if personaje.imagen_data %}
                   <img src="data:image/png;base64,{{ personaje.imagen_data | b64encode }}" alt="{{ personaje.nombre }}">
                 {% elif personaje.imagen_url %}
@@ -55,10 +61,10 @@
                 {% else %}
                   <div class="placeholder"><span class="placeholder-text">SIN IMAGEN</span></div>
                 {% endif %}
-                <div class="personaje-overlay">
-                  <h2 class="personaje-nombre">{{ personaje.nombre }}</h2>
-                  <p class="has-text-white is-size-6">{{ "Activo" if personaje.estado else "Inactivo" }}</p>
-                </div>
+              </div>
+              <div class="card-content has-text-centered">
+                <p class="title is-4 has-text-warning">{{ personaje.nombre }}</p>
+                <p class="subtitle is-6 has-text-grey-light">{{ personaje.poder }}</p>
               </div>
             </div>
           </a>
@@ -67,14 +73,17 @@
     </div>
   {% endif %}
 
+  {# ============================
+     ✅ DIRECTORES
+     ============================ #}
   {% if directores %}
     <h2 class="title has-text-warning">Directores</h2>
     <div class="columns is-multiline">
       {% for director in directores %}
-        <div class="column is-one-sixth">
-          <a href="/directores/{{ director.nombre }}">
-            <div class="director-card">
-              <div class="director-card-image">
+        <div class="column is-one-quarter">
+          <a href="/directores/page#card-{{ director.id }}">
+            <div class="card has-background-black" style="border:2px solid #e62429;">
+              <div class="card-image">
                 {% if director.imagen_data %}
                   <img src="data:image/png;base64,{{ director.imagen_data | b64encode }}" alt="{{ director.nombre }}">
                 {% elif director.imagen_url %}
@@ -82,10 +91,9 @@
                 {% else %}
                   <div class="placeholder"><span class="placeholder-text">SIN IMAGEN</span></div>
                 {% endif %}
-                <div class="director-overlay">
-                  <h2 class="director-nombre">{{ director.nombre }}</h2>
-                  <p class="has-text-white is-size-6">{{ "Activo" if director.estado else "Inactivo" }}</p>
-                </div>
+              </div>
+              <div class="card-content has-text-centered">
+                <p class="title is-4 has-text-warning">{{ director.nombre }}</p>
               </div>
             </div>
           </a>
@@ -94,14 +102,17 @@
     </div>
   {% endif %}
 
+  {# ============================
+     ✅ CURIOSIDADES
+     ============================ #}
   {% if curiosidades %}
     <h2 class="title has-text-warning">Curiosidades</h2>
     <div class="columns is-multiline">
       {% for curiosidad in curiosidades %}
-        <div class="column is-one-sixth">
-          <a href="/curiosidades/{{ curiosidad.pelicula_id }}">
-            <div class="curiosidad-card">
-              <div class="curiosidad-card-image">
+        <div class="column is-one-quarter">
+          <a href="/curiosidades/page#card-{{ curiosidad.id }}">
+            <div class="card has-background-black" style="border:2px solid #e62429;">
+              <div class="card-image">
                 {% if curiosidad.pelicula and curiosidad.pelicula.imagen_data %}
                   <img src="data:image/png;base64,{{ curiosidad.pelicula.imagen_data | b64encode }}" alt="Curiosidad">
                 {% elif curiosidad.pelicula and curiosidad.pelicula.imagen_url %}
@@ -109,13 +120,10 @@
                 {% else %}
                   <div class="placeholder"><span class="placeholder-text">SIN IMAGEN</span></div>
                 {% endif %}
-                <div class="curiosidad-overlay">
-                  <h2 class="curiosidad-titulo">{{ curiosidad.pelicula.titulo }}</h2>
-                </div>
               </div>
-              <div class="box has-text-centered" style="margin-top:1rem; background:rgba(0,0,0,0.7); border:3px solid #e62429;">
-                <p class="is-size-4 has-text-white">{{ curiosidad.contenido }}</p>
-                <p class="is-size-6 has-text-warning">{{ "Activa" if curiosidad.estado else "Eliminada" }}</p>
+              <div class="card-content has-text-centered">
+                <p class="title is-4 has-text-warning">{{ curiosidad.pelicula.titulo }}</p>
+                <p class="subtitle is-6 has-text-grey-light">{{ curiosidad.contenido }}</p>
               </div>
             </div>
           </a>
@@ -123,5 +131,6 @@
       {% endfor %}
     </div>
   {% endif %}
+
 </section>
 {% endblock %}

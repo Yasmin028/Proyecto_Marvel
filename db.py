@@ -4,7 +4,7 @@ from sqlmodel import SQLModel, Session, create_engine
 # ✅ 1. URL de la base de datos (local o Clever Cloud)
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql://uey3jcxwelplh9gijfwb:53z3WjVAfYrajauStXZnw26jLM7QWC@bof3lxgufoam6xb5qdsc-postgresql.services.clever-cloud.com:50013/bof3lxgufoam6xb5qdsc"
+    "postgresql://uhyxf2cbb08u4dxfwwln:PKjyZfNzAUIfQTws2InjYP5pylErtr@bhxiwqkwcuwbckhtwevk-postgresql.services.clever-cloud.com:50013/bhxiwqkwcuwbckhtwevk"
 )
 
 # ✅ 2. Crear engine global (para usarlo en toda la app)

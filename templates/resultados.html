@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="section bg-estelar">
+  <div class="container">
+
+    <h1 class="title has-text-warning has-text-centered" style="font-size: 5rem;">
+      RESULTADOS PARA "{{ q }}"
+    </h1>
+
+    <!-- ✅ DIRECTORES -->
+    {% if directores %}
+      <h2 class="title is-3 has-text-warning">Directores</h2>
+      <div class="columns is-multiline is-centered">
+        {% for director in directores %}
+          <div class="column is-one-third">
+            <a href="/directores/{{ director.id }}/page">
+              <div class="box" style="
+                background: rgba(0,0,0,0.8);
+                border: 3px solid #e62429;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              ">
+                {% if director.imagen_url %}
+                  <figure class="image is-128x128" style="margin-bottom: 1rem;">
+                    <img src="{{ director.imagen_url }}" style="object-fit: cover; border-radius: 50%;">
+                  </figure>
+                {% endif %}
+                <h3 class="title is-4 has-text-warning">{{ director.nombre }}</h3>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- ✅ PELÍCULAS -->
+    {% if peliculas %}
+      <h2 class="title is-3 has-text-warning">Películas</h2>
+      <div class="columns is-multiline is-centered">
+        {% for pelicula in peliculas %}
+          <div class="column is-one-third">
+            <a href="/peliculas/{{ pelicula.id }}/page">
+              <div class="box" style="
+                background: rgba(0,0,0,0.8);
+                border: 3px solid #e62429;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              ">
+                {% if pelicula.imagen_url %}
+                  <figure class="image is-128x128" style="margin-bottom: 1rem;">
+                    <img src="{{ pelicula.imagen_url }}" style="object-fit: cover; border-radius: 12px;">
+                  </figure>
+                {% endif %}
+                <h3 class="title is-4 has-text-warning">{{ pelicula.titulo }}</h3>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- ✅ PERSONAJES -->
+    {% if personajes %}
+      <h2 class="title is-3 has-text-warning">Personajes</h2>
+      <div class="columns is-multiline is-centered">
+        {% for personaje in personajes %}
+          <div class="column is-one-third">
+            <a href="/personajes/{{ personaje.id }}/page">
+              <div class="box" style="
+                background: rgba(0,0,0,0.8);
+                border: 3px solid #e62429;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              ">
+                {% if personaje.imagen_url %}
+                  <figure class="image is-128x128" style="margin-bottom: 1rem;">
+                    <img src="{{ personaje.imagen_url }}" style="object-fit: cover; border-radius: 12px;">
+                  </figure>
+                {% endif %}
+                <h3 class="title is-4 has-text-warning">{{ personaje.nombre }}</h3>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- ✅ CURIOSIDADES -->
+    {% if curiosidades %}
+      <h2 class="title is-3 has-text-warning">Curiosidades</h2>
+      <div class="columns is-multiline is-centered">
+        {% for curiosidad in curiosidades %}
+          <div class="column is-one-third">
+            <a href="/curiosidades/{{ curiosidad.id }}/page">
+              <div class="box" style="
+                background: rgba(0,0,0,0.8);
+                border: 3px solid #e62429;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              ">
+                {% if curiosidad.pelicula and curiosidad.pelicula.imagen_url %}
+                  <figure class="image is-128x128" style="margin-bottom: 1rem;">
+                    <img src="{{ curiosidad.pelicula.imagen_url }}" style="object-fit: cover; border-radius: 12px;">
+                  </figure>
+                {% endif %}
+                <p class="has-text-white has-text-centered">{{ curiosidad.contenido[:100] }}...</p>
+                <p class="has-text-grey-light is-size-7 mt-2">
+                  {{ curiosidad.pelicula.titulo if curiosidad.pelicula else "Sin título" }}
+                </p>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if not directores and not peliculas and not personajes and not curiosidades %}
+      <p class="has-text-centered has-text-grey is-size-4">No se encontraron resultados.</p>
+    {% endif %}
+
+  </div>
+</section>
+{% endblock %}

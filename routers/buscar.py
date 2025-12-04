@@ -38,7 +38,7 @@ def buscar(request: Request, q: str = Query(None), session: Session = SessionDep
         select(Curiosidad).where(Curiosidad.contenido.ilike(f"%{term}%"))
     ).all()
 
-    return templates.TemplateResponse("buscar.html", {
+    return templates.TemplateResponse("resultados.html", {   # ✅ ÚNICO CAMBIO
         "request": request,
         "q": term,
         "peliculas": peliculas,

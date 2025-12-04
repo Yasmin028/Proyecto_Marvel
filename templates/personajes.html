@@ -5,19 +5,73 @@
   <div class="container">
     <h1 class="title has-text-warning has-text-centered" style="font-size: 6rem;">🦸 Personajes</h1>
 
+    <!-- ✅ MENSAJE DE CONFIRMACIÓN -->
+    {% if mensaje %}
+      <div class="notification is-success is-light has-text-centered">
+        {{ mensaje }}
+      </div>
+    {% endif %}
+
+    <!-- ✅ FORMULARIO PARA CREAR PERSONAJE -->
+    <div class="box" style="margin-top: 2rem; background: rgba(0,0,0,0.8); border: 3px solid #e62429;">
+      <h2 class="title is-3 has-text-warning has-text-centered">Agregar nuevo personaje</h2>
+
+      <form action="/personajes" method="post" enctype="multipart/form-data">
+        <div class="columns">
+          <div class="column is-half">
+
+            <div class="field">
+              <label class="label has-text-white">Nombre</label>
+              <div class="control">
+                <input class="input" type="text" name="nombre" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label has-text-white">Poder</label>
+              <div class="control">
+                <input class="input" type="text" name="poder" required>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="column is-half">
+
+            <div class="field">
+              <label class="label has-text-white">Imagen</label>
+              <div class="control">
+                <input class="input" type="file" name="imagen" accept="image/png,image/jpeg,image/webp">
+              </div>
+            </div>
+
+            <div class="field has-text-centered" style="margin-top: 2rem;">
+              <button class="button is-danger is-medium">
+                Guardar personaje
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- ✅ FIN FORMULARIO -->
+
     <h3 class="subtitle is-4 has-text-light">🧑‍🚀 Listado de Personajes</h3>
 
     <div class="columns is-multiline">
       {% for personaje in personajes %}
       <div class="column is-one-third is-flex is-flex-direction-column is-align-items-center">
-        <div class="card">
+
+        <!-- ✅ AGREGADO: ID PARA QUE LA BÚSQUEDA PUEDA SALTAR AQUÍ -->
+        <div class="card" id="card-{{ personaje.id }}">
 
           <div class="card-image">
             {% if personaje.imagen_url %}
               <figure class="image" style="width: 100%; max-height: 300px; overflow: hidden;">
-  <img src="{{ personaje.imagen_url }}" alt="{{ personaje.nombre }}"
-       style="width: 100%; height: auto; object-fit: contain; border-radius: 8px;">
-</figure>
+                <img src="{{ personaje.imagen_url }}" alt="{{ personaje.nombre }}"
+                     style="width: 100%; height: auto; object-fit: contain; border-radius: 8px;">
+              </figure>
             {% else %}
               <figure class="image is-square has-background-light has-text-centered">
                 <p class="has-text-grey pt-6">Sin imagen</p>
@@ -27,12 +81,20 @@
 
           <div class="card-content">
             <p class="title is-3 has-text-warning">{{ personaje.nombre }}</p>
-<p class="subtitle is-5 has-text-light">{{ personaje.poder }}</p>
+            <p class="subtitle is-5 has-text-light">{{ personaje.poder }}</p>
 
             <span class="tag is-{{ 'success' if personaje.estado else 'danger' }}">
               {{ "Activo" if personaje.estado else "Eliminado" }}
             </span>
           </div>
+
+          <!-- ✅ BOTÓN DE ELIMINAR (CORREGIDO _method → method) -->
+          <form action="/personajes/{{ personaje.nombre }}" method="post" style="margin-bottom: 1rem;" onsubmit="return confirm('¿Eliminar este personaje?');">
+            <input type="hidden" name="method" value="delete">
+            <div class="has-text-centered">
+              <button class="button is-small is-danger">Eliminar</button>
+            </div>
+          </form>
 
         </div>
       </div>

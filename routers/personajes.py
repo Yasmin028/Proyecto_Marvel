@@ -1,6 +1,6 @@
 import os, uuid
 from fastapi import APIRouter, Depends, HTTPException, Form, UploadFile, File, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlmodel import Session, select
 from db import get_session
@@ -56,12 +56,13 @@ async def crear_personaje(
     session.commit()
     session.refresh(nuevo)
 
-    return {"mensaje": "Personaje creado correctamente", "id": nuevo.id}
+    # ✅ Redirigir con mensaje
+    return RedirectResponse(url="/personajes/page", status_code=303)
 
 @router.put("/{nombre}", tags=["Personajes"])
 def actualizar_personaje(nombre: str, personaje: PersonajeCreate, session: Session = SessionDep):
     db_personaje = session.exec(select(Personaje).where(Personaje.nombre == nombre)).first()
-    if not db_personaje:   # ✅ CORREGIDO
+    if not db_personaje:
         raise HTTPException(status_code=404, detail="Personaje no encontrado")
 
     for key, value in personaje.dict(exclude_unset=True).items():
@@ -73,17 +74,24 @@ def actualizar_personaje(nombre: str, personaje: PersonajeCreate, session: Sessi
 
     return {"mensaje": "Personaje actualizado correctamente"}
 
-@router.delete("/{nombre}", tags=["Personajes"])
-def eliminar_personaje(nombre: str, session: Session = SessionDep):
-    db_personaje = session.exec(select(Personaje).where(Personaje.nombre == nombre)).first()
-    if not db_personaje:
-        raise HTTPException(status_code=404, detail="Personaje no encontrado")
+# ✅ Ruta POST para eliminar desde HTML
+@router.post("/{nombre}", tags=["Personajes"])
+def eliminar_personaje_html(nombre: str, method: str = Form(...), session: Session = SessionDep):
+    if method == "delete":
+        db_personaje = session.exec(select(Personaje).where(Personaje.nombre == nombre)).first()
+        if not db_personaje:
+            raise HTTPException(status_code=404, detail="Personaje no encontrado")
 
-    db_personaje.estado = False
-    session.add(db_personaje)
-    session.commit()
+        db_personaje.estado = False
+        session.add(db_personaje)
+        session.commit()
 
-    return {"mensaje": "Personaje eliminado (soft delete)"}
+        return RedirectResponse(
+            url="/personajes/page?mensaje=Personaje eliminado",
+            status_code=303
+        )
+
+    raise HTTPException(status_code=400, detail="Método no permitido")
 
 @router.post("/restaurar/{nombre}", tags=["Personajes"])
 def restaurar_personaje(nombre: str, session: Session = SessionDep):
@@ -105,9 +113,10 @@ def personajes_eliminados(session: Session = SessionDep):
 # ------------------- Vista HTML -------------------
 
 @router.get("/page", response_class=HTMLResponse, tags=["Personajes"])
-def vista_personajes(request: Request, session: Session = SessionDep):
+def vista_personajes(request: Request, mensaje: str = "", session: Session = SessionDep):
     personajes = session.exec(select(Personaje).where(Personaje.estado == True)).all()
     return templates.TemplateResponse("personajes.html", {
         "request": request,
-        "personajes": personajes
+        "personajes": personajes,
+        "mensaje": mensaje   # ✅ AGREGADO
     })
