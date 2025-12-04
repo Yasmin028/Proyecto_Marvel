@@ -54,7 +54,6 @@ async def crear_director(
     session.commit()
     session.refresh(nuevo)
 
-    # ✅ Redirigir con mensaje
     return RedirectResponse(
         url=f"/directores/page?mensaje=Director creado correctamente (ID: {nuevo.id})",
         status_code=303
@@ -75,7 +74,6 @@ def actualizar_director(nombre: str, director: DirectorCreate, session: Session 
 
     return {"mensaje": "Director actualizado correctamente"}
 
-# ✅ Ruta POST para eliminar desde HTML
 @router.post("/{nombre}", tags=["Directores"])
 def eliminar_director_html(nombre: str, method: str = Form(...), session: Session = SessionDep):
     if method == "delete":
@@ -110,23 +108,24 @@ def directores_eliminados(session: Session = SessionDep):
 
 # ------------------- Vista HTML -------------------
 
+# ✅ 1. Ruta fija primero
 @router.get("/page", response_class=HTMLResponse, tags=["Directores"])
 def vista_directores(request: Request, mensaje: str = "", session: Session = SessionDep):
     directores = session.exec(select(Director).where(Director.estado == True)).all()
 
-    # ✅ Forzar carga de películas para cada director
     for director in directores:
         _ = director.peliculas
 
     return templates.TemplateResponse("directores.html", {
         "request": request,
         "directores": directores,
-        "mensaje": mensaje   # ✅ Enviar mensaje al HTML
+        "mensaje": mensaje
     })
 
-@router.get("/{id}/page", response_class=HTMLResponse, tags=["Directores"])
-def detalle_director_por_id(id: int, request: Request, session: Session = SessionDep):
-    director = session.get(Director, id)
+# ✅ 2. Ruta por NOMBRE (primero para evitar 422)
+@router.get("/{nombre}/page", response_class=HTMLResponse, tags=["Directores"])
+def detalle_director_html(nombre: str, request: Request, session: Session = SessionDep):
+    director = session.exec(select(Director).where(Director.nombre == nombre)).first()
     if not director:
         raise HTTPException(status_code=404, detail="Director no encontrado")
 
@@ -142,9 +141,10 @@ def detalle_director_por_id(id: int, request: Request, session: Session = Sessio
         "peliculas": peliculas_dirigidas
     })
 
-@router.get("/{nombre}/page", response_class=HTMLResponse, tags=["Directores"])
-def detalle_director_html(nombre: str, request: Request, session: Session = SessionDep):
-    director = session.exec(select(Director).where(Director.nombre == nombre)).first()
+# ✅ 3. Ruta por ID (para buscador)
+@router.get("/{id}/page", response_class=HTMLResponse, tags=["Directores"])
+def detalle_director_por_id(id: int, request: Request, session: Session = SessionDep):
+    director = session.get(Director, id)
     if not director:
         raise HTTPException(status_code=404, detail="Director no encontrado")
 

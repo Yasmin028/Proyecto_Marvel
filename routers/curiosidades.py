@@ -5,6 +5,7 @@ from sqlmodel import Session, select
 from db import get_session
 from models.models import Curiosidad, Pelicula
 from models.schemas import CuriosidadCreate
+import urllib.parse
 
 router = APIRouter()
 SessionDep = Depends(get_session)
@@ -46,9 +47,11 @@ def crear_curiosidad(
     session.commit()
     session.refresh(curiosidad)
 
-    # ✅ Redirigir con mensaje
+    # ✅ Evitar error 500 escapando la URL
+    mensaje = urllib.parse.quote(f"Curiosidad creada correctamente (ID: {curiosidad.id})")
+
     return RedirectResponse(
-        url=f"/curiosidades/page?mensaje=Curiosidad creada correctamente (ID: {curiosidad.id})",
+        url=f"/curiosidades/page?mensaje={mensaje}",
         status_code=303
     )
 
