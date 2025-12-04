@@ -103,13 +103,11 @@
         </a>
 
         <!-- ✅ BOTÓN DE ELIMINAR -->
-        <form action="/peliculas/{{ pelicula.id }}" method="post" style="margin-top: 1rem;" onsubmit="return confirm('¿Eliminar esta película?');">
-          <input type="hidden" name="_method" value="delete">
-          <div class="has-text-centered">
-            <button class="button is-small is-danger">Eliminar</button>
-          </div>
-        </form>
-
+        <form action="/peliculas/{{ pelicula.id_o_nombre}}" method="post"
+      onsubmit="return confirm('¿Eliminar?');">
+  <input type="hidden" name="method" value="delete">
+  <button class="button is-small is-danger">Eliminar</button>
+</form>
       </div>
 
     </div>

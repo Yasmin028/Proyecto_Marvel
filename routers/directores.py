@@ -85,7 +85,7 @@ def eliminar_director_html(nombre: str, method: str = Form(...), session: Sessio
         session.add(db_director)
         session.commit()
 
-        return RedirectResponse(url="/directores/page?mensaje=Director eliminado", status_code=303)
+        return RedirectResponse("/directores/page?mensaje=Director eliminado", status_code=303)
 
     raise HTTPException(status_code=400, detail="Método no permitido")
 

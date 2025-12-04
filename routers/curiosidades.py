@@ -82,10 +82,7 @@ def eliminar_curiosidad_html(curiosidad_id: int, method: str = Form(...), sessio
         session.add(db_curiosidad)
         session.commit()
 
-        return RedirectResponse(
-            url="/curiosidades/page?mensaje=Curiosidad eliminada",
-            status_code=303
-        )
+        return RedirectResponse("/curiosidades/page?mensaje=Curiosidad eliminada", status_code=303)
 
     raise HTTPException(status_code=400, detail="Método no permitido")
 

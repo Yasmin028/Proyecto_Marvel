@@ -78,18 +78,15 @@ def actualizar_personaje(nombre: str, personaje: PersonajeCreate, session: Sessi
 @router.post("/{nombre}", tags=["Personajes"])
 def eliminar_personaje_html(nombre: str, method: str = Form(...), session: Session = SessionDep):
     if method == "delete":
-        db_personaje = session.exec(select(Personaje).where(Personaje.nombre == nombre)).first()
-        if not db_personaje:
+        personaje = session.exec(select(Personaje).where(Personaje.nombre == nombre)).first()
+        if not personaje:
             raise HTTPException(status_code=404, detail="Personaje no encontrado")
 
-        db_personaje.estado = False
-        session.add(db_personaje)
+        personaje.estado = False
+        session.add(personaje)
         session.commit()
 
-        return RedirectResponse(
-            url="/personajes/page?mensaje=Personaje eliminado",
-            status_code=303
-        )
+        return RedirectResponse("/personajes/page?mensaje=Personaje eliminado", status_code=303)
 
     raise HTTPException(status_code=400, detail="Método no permitido")
 
