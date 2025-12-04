@@ -136,7 +136,7 @@ def actualizar_pelicula(id: int, pelicula: PeliculaCreate, session: Session = Se
     return {"mensaje": "Película actualizada correctamente"}
 
 # ✅ Ruta POST para eliminar desde HTML
-@router.post("/{id}", tags=["Peliculas"])
+@router.post("/eliminar/{id}", tags=["Peliculas"])
 def eliminar_pelicula_html(id: int, method: str = Form(...), session: Session = SessionDep):
     if method == "delete":
         db_pelicula = session.get(Pelicula, id)
@@ -150,7 +150,6 @@ def eliminar_pelicula_html(id: int, method: str = Form(...), session: Session = 
         return RedirectResponse("/peliculas/page?mensaje=Película eliminada", status_code=303)
 
     raise HTTPException(status_code=400, detail="Método no permitido")
-
 @router.post("/restaurar/{id}", tags=["Peliculas"])
 def restaurar_pelicula(id: int, session: Session = SessionDep):
     db_pelicula = session.get(Pelicula, id)

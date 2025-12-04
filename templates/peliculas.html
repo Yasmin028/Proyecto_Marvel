@@ -103,7 +103,7 @@
         </a>
 
         <!-- ✅ BOTÓN DE ELIMINAR -->
-        <form action="/peliculas/{{ pelicula.id_o_nombre}}" method="post"
+        <form action="/peliculas/eliminar/{{ pelicula.id}}" method="post"
       onsubmit="return confirm('¿Eliminar?');">
   <input type="hidden" name="method" value="delete">
   <button class="button is-small is-danger">Eliminar</button>
